@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var express_1 = require("express");
+var mangaController_1 = require("../controllers/mangaController");
+var router = (0, express_1.Router)();
+router.get('/', mangaController_1.mangaController.getAll);
+router.get('/views', mangaController_1.mangaController.getMangasByViews);
+router.get('/:id', mangaController_1.mangaController.getOne);
+router.post('/', mangaController_1.mangaController.add);
+router.put('/:id', mangaController_1.mangaController.edit);
+router.put('/delete/:id', mangaController_1.mangaController.delete);
+exports.default = router;
