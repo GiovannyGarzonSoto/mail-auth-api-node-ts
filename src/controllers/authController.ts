@@ -48,12 +48,12 @@ class AuthController {
             })
 
             const info = await transporter.sendMail({
-                from: 'noreply@mipet.com', // sender address,
+                from: 'noreply@app.com', // sender address,
                 to: email,
-                subject: 'Pkapp Account Activation Link',
+                subject: 'App Account Activation Link',
                 html: `
-                <h2>Please click on given link to activate your mipet account</h2>
-                <p>localhost:8080/auth/activate/${token}</p>`
+                <h2>Please click on given link to activate your App account</h2>
+                <a href="http://localhost:8080/auth/activate/${token}">Clic aquí</a>`
             })
             if(!info){
                 return res.json({
@@ -173,12 +173,12 @@ class AuthController {
                 }
             })
             const info = await transporter.sendMail({
-                from: 'noreply@mipet.com', // sender address,
+                from: 'noreply@app.com', // sender address,
                 to: email,
-                subject: 'Pkapp Reset Password Link',
+                subject: 'App Reset Password Link',
                 html: `
                     <h2>Please click on given link to reset your password</h2>
-                    <p>localhost:8080/auth/resetpass/${token}</p>`
+                    <a href="http://localhost:8080/auth/resetpass/${token}">Clic aquí</a>`
             })
             console.log(info)
             if(!info){
