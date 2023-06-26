@@ -5,8 +5,8 @@ import jwt from 'jsonwebtoken'
 import _ from 'lodash'
 
 //ethereal.email
-const nmuser = 'deangelo.murray98@ethereal.email'
-const nmpass = '1ehcrQ79ZhTRtaHspA'
+const nmuser = 'martine22@ethereal.email'
+const nmpass = 'qfU9zRBGjsBQ4YACNQ'
 
 class AuthController {
     public async signup(req: Request, res: Response) {
