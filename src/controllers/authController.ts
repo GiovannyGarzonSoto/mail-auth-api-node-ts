@@ -35,26 +35,26 @@ class AuthController {
             const token = jwt.sign(payload, process.env.SEED, {expiresIn: 1200})
 
             const transporter = nodemailer.createTransport({
-                host: 'smtp.ethereal.email',
-                port: 587,
-                secure: false,
+                service: 'gmail',
                 auth: {
-                    user: nmuser,
-                    pass: nmpass
+                    user: 'giovannygarzonsoto@gmail.com',
+                    pass: process.env.GMAIL_PASS
                 },
-                tls: {
-                    rejectUnauthorized: false
-                }
+                // tls: {
+                //     rejectUnauthorized: false
+                // }
             })
+            console.log("🚀 ~ file: authController.ts:50 ~ AuthController ~ signup ~ transporter:", transporter)
 
             const info = await transporter.sendMail({
-                from: 'noreply@app.com', // sender address,
+                from: 'giovannygarzonsoto@gmail.com', // sender address,
                 to: email,
                 subject: 'App Account Activation Link',
                 html: `
                 <h2>Please click on given link to activate your App account</h2>
                 <a href="http://localhost:8080/auth/activate/${token}">Clic aquí</a>`
             })
+            console.log("🚀 ~ file: authController.ts:60 ~ AuthController ~ signup ~ info:", info)
             if(!info){
                 return res.json({
                     success: false,
