@@ -24,21 +24,15 @@ class AuthController {
             })
             newUser.password = await newUser.encryptPassword(newUser.password)
             const data = await newUser.save()
-            const payload = {
-                _id: data._id,
-                name: data.name,
-                email: data.email,
-                role: data.role
-            }
-            const token = jwt.sign(payload, SEED, { expiresIn: 1200 })
-
+            const emailDecored = data.email.split("@")[0]
+            console.log(emailDecored)
             const info = await transporter.sendMail({
                 from: 'noreply@app.com',
                 to: email,
                 subject: 'App Account Activation Link',
                 html: `
                 <h2>Please click on given link to activate your App account</h2>
-                <a href="http://localhost:8080/auth/activate/${token}">Clic aquí</a>`
+                <a href="http://localhost:5173/auth/activate/${emailDecored}">http://localhost:5173/auth/activate</a>`
             })
 
             if (!info) {
@@ -112,14 +106,7 @@ class AuthController {
                     message: 'Es necesario un token'
                 })
             }
-            const decoded: any = jwt.verify(token, SEED)
-            if (!decoded) {
-                return res.status(200).json({
-                    success: false,
-                    message: 'Token erroneo o expirado'
-                })
-            }
-            const { email } = decoded
+            const email  = token + '@gmail.com'
             const user = await User.findOne({ email })
             await user.updateOne({ active: true })
             return res.json({
@@ -145,24 +132,23 @@ class AuthController {
                     message: 'Problemas al realizar la operacion'
                 })
             }
-            const token = jwt.sign({ _id: user._id }, SEED, { expiresIn: 1200 })
+            const random = Math.floor(Math.random() + 10938908).toString() 
         
             const info = await transporter.sendMail({
                 from: 'noreply@app.com', // sender address,
                 to: email,
                 subject: 'App Reset Password Link',
                 html: `
-                    <h2>Please click on given link to reset your password</h2>
-                    <a href="http://localhost:8080/auth/resetpass/${token}">Clic aquí</a>`
-            })
-            console.log(info)
+                    <a href="http://localhost:5173/auth/resetpass/${random}">http://localhost:5173/auth/resetpass/${random}</a>
+                    `
+                })
             if (!info) {
                 return res.json({
                     success: false,
                     message: 'Problemas al cambiar su contraseña'
                 })
             }
-            const data = await user.updateOne({ resetLink: token })
+            const data = await user.updateOne({ resetLink: random })
             console.log(data)
             if (!data) {
                 return res.status(200).json({
@@ -186,20 +172,15 @@ class AuthController {
     public async resetPassword(req: Request, res: Response) {
         try {
             const { resetLink, newPass } = req.body
+            console.log(req.body, 'token')
             if (!resetLink) {
                 return res.status(200).json({
                     success: false,
                     message: 'Token incorrecto o expirado'
                 })
             }
-            const decoded = jwt.verify(resetLink, SEED)
-            if (!decoded) {
-                return res.status(200).json({
-                    success: false,
-                    message: 'Error al verificar el token'
-                })
-            }
             let user = await User.findOne({ resetLink })
+            console.log(user, 'user')
             const obj = {
                 password: newPass,
                 resetLink: ''
