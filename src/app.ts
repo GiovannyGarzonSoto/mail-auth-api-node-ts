@@ -4,13 +4,14 @@ import routes from './routes'
 import path from 'path'
 import env from 'dotenv'
 import cors from 'cors'
+import {PORT} from './config'
 
 const app: Application = express()
 env.config()
 
 app.use(cors())
 app.use(morgan('dev'))
-app.set('port', process.env.PORT)
+app.set('port', PORT)
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
 app.use('/api', routes)
