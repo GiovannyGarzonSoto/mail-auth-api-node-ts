@@ -31,7 +31,7 @@ class AuthController {
                 subject: 'App Account Activation Link',
                 html: `
                 <h2>Please click on given link to activate your App account</h2>
-                <a href="https://beamish-parfait-f718c4.netlify.app/auth/activate/${emailDecored}">http://localhost:5173/auth/activate</a>`
+                <a href="https://beamish-parfait-f718c4.netlify.app/auth/activate/${emailDecored}">https://beamish-parfait-f718c4.netlify.app/auth/activate</a>`
             })
 
             if (!info) {
