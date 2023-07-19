@@ -3,7 +3,7 @@ import User, { IUser } from '../models/User'
 import jwt from 'jsonwebtoken'
 import _ from 'lodash'
 import { v4 as uuidv4 } from 'uuid'
-import { transporter } from '../app'
+import { transporter } from '../config'
 import { SEED } from '../config'
 
 class AuthController {
