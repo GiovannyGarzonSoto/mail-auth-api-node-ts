@@ -2,12 +2,24 @@ import express, {Application} from 'express'
 import morgan from 'morgan'
 import routes from './routes'
 import path from 'path'
-import env from 'dotenv'
 import cors from 'cors'
-import {PORT} from './config'
+import nodemailer from 'nodemailer'
+import { PORT, GMAIL_PASS } from './config'
 
 const app: Application = express()
-env.config()
+
+export const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+        user: 'giovankyandres@gmail.com',
+        pass: GMAIL_PASS,
+    },
+})
+transporter.verify().then(() => {
+    console.log('Server ready for send emails')
+})
 
 app.use(cors())
 app.use(morgan('dev'))
