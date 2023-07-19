@@ -3,6 +3,7 @@ import User, { IUser } from '../models/User'
 import { transporter } from '../config/mail'
 import jwt from 'jsonwebtoken'
 import _ from 'lodash'
+import { v4 as uuidv4 } from 'uuid'
 import { SEED } from '../config'
 
 class AuthController {
@@ -24,7 +25,6 @@ class AuthController {
             newUser.password = await newUser.encryptPassword(newUser.password)
             const data = await newUser.save()
             const emailDecored = data.email.split("@")[0]
-            console.log(emailDecored)
             const info = await transporter.sendMail({
                 from: 'noreply@app.com',
                 to: email,
@@ -131,7 +131,7 @@ class AuthController {
                     message: 'Problemas al realizar la operacion'
                 })
             }
-            const random = Math.floor(Math.random() + 10938908).toString() 
+            const random = uuidv4();
         
             const info = await transporter.sendMail({
                 from: 'noreply@app.com', // sender address,
@@ -148,7 +148,6 @@ class AuthController {
                 })
             }
             const data = await user.updateOne({ resetLink: random })
-            console.log(data)
             if (!data) {
                 return res.status(200).json({
                     success: false,
@@ -171,7 +170,6 @@ class AuthController {
     public async resetPassword(req: Request, res: Response) {
         try {
             const { resetLink, newPass } = req.body
-            console.log(req.body, 'token')
             if (!resetLink) {
                 return res.status(200).json({
                     success: false,
@@ -179,7 +177,6 @@ class AuthController {
                 })
             }
             let user = await User.findOne({ resetLink })
-            console.log(user, 'user')
             const obj = {
                 password: newPass,
                 resetLink: ''

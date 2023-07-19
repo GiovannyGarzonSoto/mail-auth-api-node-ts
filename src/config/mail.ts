@@ -10,6 +10,7 @@ export const transporter = nodemailer.createTransport({
         pass: GMAIL_PASS,
     },
 })
+console.log(transporter, 'probado')
 transporter.verify().then(() => {
     console.log('Server ready for send emails')
 })
