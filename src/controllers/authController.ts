@@ -1,7 +1,6 @@
 import { Request, Response } from 'express'
 import User, { IUser } from '../models/User'
 import { transporter } from '../config/mail'
-import nodemailer from 'nodemailer'
 import jwt from 'jsonwebtoken'
 import _ from 'lodash'
 import { SEED } from '../config'
