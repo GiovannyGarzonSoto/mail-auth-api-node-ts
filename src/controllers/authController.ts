@@ -1,11 +1,23 @@
 import { Request, Response } from 'express'
 import User, { IUser } from '../models/User'
-import { transporter } from '../config/mail'
 import jwt from 'jsonwebtoken'
 import _ from 'lodash'
 import { v4 as uuidv4 } from 'uuid'
-import { SEED } from '../config'
+import nodemailer from 'nodemailer'
+import { SEED, GMAIL_PASS } from '../config'
 
+export const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+        user: 'giovankyandres@gmail.com',
+        pass: GMAIL_PASS,
+    },
+})
+transporter.verify().then(() => {
+    console.log('Server ready for send emails')
+})
 class AuthController {
     public async signup(req: Request, res: Response) {
         try {
