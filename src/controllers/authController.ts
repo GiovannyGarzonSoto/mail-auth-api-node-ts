@@ -31,7 +31,7 @@ class AuthController {
                 subject: 'App Account Activation Link',
                 html: `
                 <h2>Please click on given link to activate your App account</h2>
-                <a href="http://localhost:5173/auth/activate/${emailDecored}">http://localhost:5173/auth/activate</a>`
+                <a href="https://beamish-parfait-f718c4.netlify.app/auth/activate/${emailDecored}">http://localhost:5173/auth/activate</a>`
             })
 
             if (!info) {
@@ -138,7 +138,7 @@ class AuthController {
                 to: email,
                 subject: 'App Reset Password Link',
                 html: `
-                    <a href="http://localhost:5173/auth/resetpass/${random}">http://localhost:5173/auth/resetpass/${random}</a>
+                    <a href="https://beamish-parfait-f718c4.netlify.app/auth/resetpass/${random}">http://localhost:5173/auth/resetpass/${random}</a>
                     `
                 })
             if (!info) {
